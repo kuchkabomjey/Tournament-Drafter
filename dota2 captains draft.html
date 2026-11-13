@@ -1,0 +1,767 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OneSevenTwo Draft</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,700;1,700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+    :root {
+      color-scheme: dark;
+      --bg: #101216;
+      --panel: #191d24;
+      --panel2: #222833;
+      --line: #343c49;
+      --muted: #9aa5b5;
+      --text: #f2f4f8;
+      --red: #d65b57;
+      --green: #4e9c79;
+      --gold: #d6ad61
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      background: radial-gradient(ellipse at top, #202631 0, #101216 55%);
+      color: var(--text);
+      font: 15px/1.45 Inter, system-ui, Segoe UI, Arial, sans-serif;
+      font-family: "Josefin Sans", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 700;
+      font-style: normal;
+    }
+
+
+
+    .alfa-slab-one-regular {
+      font-family: "Alfa Slab One", serif;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    button,
+    input {
+      font: inherit
+    }
+
+    button {
+      cursor: pointer;
+      border: 1px solid var(--line);
+      background: #29313d;
+      color: var(--text);
+      border-radius: 8px;
+      padding: 9px 13px
+    }
+
+    button:hover {
+      filter: brightness(1.15)
+    }
+
+    button:disabled {
+      opacity: .35;
+      cursor: not-allowed
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 22px max(20px, calc((100vw - 2000px)/2));
+      border-bottom: 1px solid var(--line);
+      background: #11151bdc;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      backdrop-filter: blur(12px)
+    }
+
+    h1 {
+      font-size: 22px;
+      margin: 0;
+      letter-spacing: .08em;
+      text-transform: uppercase
+    }
+
+    h1 span {
+      color: var(--gold)
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 3px
+    }
+
+    main {
+      max-width: 1900px;
+      margin: 8px auto;
+      padding: 0 10px
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 8px
+    }
+
+    .toolbar .spacer {
+      flex: 1
+    }
+
+    .status {
+      color: var(--muted);
+      font-size: .98em
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 190px minmax(0, 1fr) 190px;
+      gap: 12px;
+      align-items: start
+    }
+
+    .team {
+      background: linear-gradient(180deg, #1b2028, #171b21);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden
+    }
+
+    .draft {
+      background: linear-gradient(180deg, #1b2028, #171b21);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden
+    }
+
+    .pool {
+      margin: 0;
+      padding: 8px 2px;
+      background: transparent;
+      border: 0;
+      overflow: visible
+    }
+
+    .team-head {
+      padding: 9px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      font-family: 'Unbounded', 'Manrope', sans-serif;
+      
+    }
+
+    .team h2 {
+      font-size: 25px;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: .08em
+    }
+
+    .radiant h2 {
+      color: #7ec9a3
+    }
+
+    .dire h2 {
+      color: #e17b78
+    }
+
+    .score {
+      font-variant-numeric: tabular-nums;
+      color: var(--muted);
+      font-size: 11px
+    }
+
+    .slots {
+      padding: 8px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 7px
+    }
+
+    .ban-list {
+      padding: 0 8px 9px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 5px
+    }
+
+    .ban-title {
+      padding: 0 9px 5px;
+      color: #c77b78;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: .08em
+    }
+
+    .ban-chip {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: #11161c;
+      border: 1px solid #4b3435;
+      border-radius: 5px;
+      padding: 3px;
+      font-size: 9px;
+      color: #c5cbd3
+    }
+
+    .ban-chip img {
+      width: 34px;
+      height: 20px;
+      object-fit: cover;
+      border-radius: 3px
+    }
+
+    .ban-chip span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap
+    }
+
+    .slot {
+      min-height: 130px;
+      border: 1px dashed #414b59;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      padding: 5px;
+      background: #151920;
+      min-width: 0
+    }
+
+    .slot img {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 5px
+    }
+
+    .slot .name {
+      font-weight: 600;
+      font-size: 11px;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
+    }
+
+    .slot .kind {
+      color: var(--muted);
+      font-size: 0px
+    }
+
+    .slot.empty {
+      color: #778291;
+      font-size: 11px;
+      justify-content: center
+    }
+
+    .draft {
+      padding: 8px;
+      margin-bottom: 10px
+    }
+
+    .draft h2 {
+      font-size: 12px;
+      margin: 0 0 7px;
+      text-transform: uppercase;
+      letter-spacing: .08em
+    }
+
+    .turn {
+      padding: 8px;
+      border-radius: 8px;
+      background: #252d38;
+      margin-bottom: 7px
+    }
+
+    .turn strong {
+      display: block;
+      font-size: 1.2em
+    }
+
+    .turn small {
+      color: var(--muted)
+    }
+
+    .turn-actions {
+      display: block;
+      font-size: 1.5em;
+    }
+
+    .turn-actions button {
+      width: 100%;
+      font-weight: 800;
+      letter-spacing: .05em;
+      padding: 9px
+    }
+
+    .pick {
+      border-color: #39785c;
+      background: #204d3b
+    }
+
+    .ban {
+      border-color: #874441;
+      background: #572d2b
+    }
+
+    .order {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 3px;
+      padding-top: 1px;
+      margin-top: 6px;
+      max-height: 180px;
+      overflow: auto
+    }
+
+    .order-item {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 6px 8px;
+      border-radius: 6px;
+      background: #151a20;
+      font-size: 1.1em;
+      color: var(--muted)
+    }
+
+    .order-item.active {
+      outline: 1px solid var(--gold);
+      color: var(--text)
+    }
+
+    .order-item b {
+      color: var(--text);
+      width: 34px
+    }
+
+    .pool {
+      margin: 0;
+      padding: 8px
+    }
+
+    .pool-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 6px
+    }
+
+    .pool-head h2,
+    .filters {
+      display: none
+    }
+
+    .search {
+      margin-left: auto;
+      min-width: 180px;
+      max-width: 260px;
+      background: #11161d;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--text);
+      padding: 8px 10px
+    }
+
+    .counts {
+      display: none
+    }
+
+    .heroes {
+      display: flex;
+      flex-direction: column;
+      gap: 12px
+    }
+
+    .attr-block {
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--c);
+      border-radius: 8px;
+      background: #14181ecc;
+      padding: 7px 8px 8px
+    }
+
+    .attr-title {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin: 0 0 6px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--c)
+    }
+
+    .attr-title small {
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 0
+    }
+
+    .attr-block.int {
+      --c: #5aa7e8
+    }
+
+    .attr-block.str {
+      --c: #e0645f
+    }
+
+    .attr-block.agi {
+      --c: #62bf7f
+    }
+
+    .attr-block.all {
+      --c: #c58be0
+    }
+
+    .heroes-grid {
+      display: grid;
+      grid-template-columns: repeat(10, minmax(0, 1fr));
+      gap: 5px
+    }
+
+    .hero {
+      position: relative;
+      border: 1px solid #343d49;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #202630;
+      text-align: left;
+      padding: 0;
+      min-width: 0
+    }
+
+    .hero img {
+      display: block;
+      width: 100%;
+      height: 90px;
+      object-fit: cover;
+      filter: saturate(.95)
+    }
+
+    .hero .hero-name {
+      display: block;
+      padding: 3px 4px 4px;
+      font-size: 1em;
+      font-weight: 650;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center
+    }
+
+    .hero .attr {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      background: #10151bdc;
+      border-radius: 4px;
+      padding: 1px 3px;
+      font-size: 8px
+    }
+
+    .hero.picked {
+      opacity: .25;
+      filter: grayscale(1);
+      cursor: not-allowed
+    }
+
+    .hero.banned {
+      opacity: .18;
+      filter: grayscale(1);
+      cursor: not-allowed
+    }
+
+    .hero:focus-visible,
+    button:focus-visible,
+    input:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px
+    }
+
+    .footer {
+      color: var(--muted);
+      font-size: 11px;
+      margin: 14px 2px
+    }
+
+    @media(max-width:1050px) {
+      .layout {
+        grid-template-columns: 150px minmax(0, 1fr) 150px
+      }
+
+      .heroes-grid {
+        grid-template-columns: repeat(7, minmax(0, 1fr))
+      }
+
+      .slot {
+        min-height: 65px
+      }
+
+      .slot img {
+        height: 38px
+      }
+    }
+
+    @media(max-width:700px) {
+      header {
+        position: static;
+        padding: 13px
+      }
+
+      .layout {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .team {
+        grid-row: 1
+      }
+
+      .center-column {
+        grid-column: 1/-1;
+        grid-row: 2
+      }
+
+      .draft {
+        margin-bottom: 8px
+      }
+
+      .slots {
+        grid-template-columns: repeat(5, minmax(0, 1fr))
+      }
+
+      .ban-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr))
+      }
+
+      .slot {
+        min-height: 54px
+      }
+
+      .slot img {
+        height: 27px
+      }
+
+      .heroes-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr))
+      }
+
+      .order {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        max-height: 75px
+      }
+    }
+
+    @media(max-width:430px) {
+      .layout {
+        grid-template-columns: 1fr
+      }
+
+      .draft,
+      .team {
+        grid-column: auto;
+        grid-row: auto
+      }
+
+      .center-column {
+        grid-column: auto;
+        grid-row: auto
+      }
+
+      .slots {
+        grid-template-columns: repeat(5, minmax(0, 1fr))
+      }
+
+      .heroes-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr))
+      }
+
+      .search {
+        margin-left: 0;
+        max-width: none;
+        flex: 1
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div>
+      <h1><span>OneSevenTwo</span> DRAFT</h1>
+      <div class="sub" style="font-size: 1.2em;">5×5 Tournament</div>
+    </div>
+    <!-- <p>
+      <div class="dota2-grid">
+       <button class="tournament-grid" onclick="window.location.href='https://kuchkabomjey.github.io/5v5-Tournament'">
+        Tournament Grid
+        </button>
+      </div>
+    </p> -->
+    <div class="status" id="apiStatus">Загрузка героев…</div>
+  </header>
+  <main>
+    <div class="toolbar">
+      <button id="resetBtn">↻</button>
+      <button id="randomBtn">🎲</button>
+      <button id="undoBtn" disabled>↶</button>
+      <span class="spacer"></span><span class="status" id="progress">Пики: 0/10 · Баны: 0/—</span>
+    </div>
+    <section class="layout">
+      <section class="team radiant">
+        <div class="team-head">
+          <h2>Radiant</h2><span class="score" id="radScore">0 / 5 picks</span>
+        </div>
+        <div class="slots" id="radSlots"></div>
+        <div class="ban-title">Баны Radiant</div>
+        <div class="ban-list" id="radBans"></div>
+      </section>
+      <div class="center-column">
+        <section class="draft">
+          <h2>Текущий ход</h2>
+          <div class="turn"><strong id="turnTitle">Загрузка…</strong><small id="turnDesc">Выберите героя</small></div>
+          <div class="turn-actions"><button class="ban" id="actionBtn" disabled>ЗАБАНИТЬ</button></div>
+          <div class="order" id="order"></div>
+        </section>
+        <section class="pool">
+          <div class="pool-head"><input class="search" id="search" placeholder="Поиск героя…"></div>
+          <div class="heroes" id="heroes"></div>
+        </section>
+      </div>
+      <section class="team dire">
+        <div class="team-head">
+          <h2>Dire</h2><span class="score" id="direScore">0 / 5 picks</span>
+        </div>
+        <div class="slots" id="direSlots"></div>
+        <div class="ban-title">Баны Dire</div>
+        <div class="ban-list" id="direBans"></div>
+      </section>
+    </section>
+  </main>
+  <script>
+    const QUOTAS = { agi: 15, int: 15, str: 10, all: 10 };
+    const ATTR = { agi: "Ловкость", int: "Интеллект", str: "Сила", all: "Универсальный" };
+    const ATTR_ICON = { agi: "AGI", int: "INT", str: "STR", all: "UNI" };
+    const DRAFT_ORDER = [
+      ["Radiant", "ban"], ["Dire", "ban"], ["Radiant", "ban"], ["Dire", "ban"],
+      ["Radiant", "pick"], ["Dire", "pick"], ["Dire", "pick"], ["Radiant", "pick"],
+      ["Radiant", "ban"], ["Dire", "ban"], ["Radiant", "ban"], ["Dire", "ban"],
+      ["Dire", "pick"], ["Radiant", "pick"], ["Radiant", "pick"], ["Dire", "pick"],
+      ["Dire", "ban"], ["Radiant", "ban"], ["Dire", "ban"], ["Radiant", "ban"],
+      ["Dire", "ban"], ["Radiant", "ban"], ["Radiant", "pick"], ["Dire", "pick"]
+    ];
+    let pool = [], turn = 0, search = "", selected = null, history = [], finished = false;
+    const $ = id => document.getElementById(id);
+    function sample(arr, n) { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[a[i], a[j]] = [a[j], a[i]]; } return a.slice(0, n); }
+    function heroImage(h) { return `https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/${h.name.replace("npc_dota_hero_", "")}.png`; }
+    function makePool(data) {
+      const groups = { agi: [], int: [], str: [], all: [] };
+      data.forEach(h => { if (groups[h.primary_attr]) groups[h.primary_attr].push(h) });
+      const missing = Object.keys(QUOTAS).filter(k => groups[k].length < QUOTAS[k]);
+      if (missing.length) { throw new Error("В API недостаточно героев для квот: " + missing.map(k => ATTR[k]).join(", ")); }
+      return Object.entries(QUOTAS).flatMap(([k, n]) => sample(groups[k], n).map(h => ({ ...h, attr: k }))).sort(() => Math.random() - .5);
+    }
+    function current() { return DRAFT_ORDER[turn] || null; }
+    function act() {
+      if (!selected || finished) return;
+      const t = current(); if (!t) return;
+      const [team, type] = t;
+      history.push({ turn, hero: selected, action: type, team });
+      pool = pool.map(h => h.id === selected.id ? { ...h, state: type, team } : h);
+      selected = null; turn++;
+      if (turn >= DRAFT_ORDER.length) finished = true;
+      render();
+    }
+    function undo() { if (!history.length) return; const last = history.pop(); pool = pool.map(h => h.id === last.hero.id ? ({ ...h, state: undefined }) : h); turn = last.turn; finished = false; selected = null; render(); }
+    function render() {
+      const t = current();
+      $("turnTitle").textContent = finished ? "Драфт завершён" : t ? `${t[0]} — ${t[1] === "pick" ? "ПИК" : "БАН"}` : "Готово";
+      $("turnDesc").textContent = finished ? "Все ходы выполнены. Можно начать новый драфт." : selected ? `Выбран: ${selected.localized_name}` : "Выбери героя в пуле, затем нажми «Выбрать» или «Забанить».";
+      const actionBtn = $("actionBtn");
+      actionBtn.textContent = finished ? "ДРАФТ ЗАВЕРШЁН" : t && t[1] === "pick" ? "ВЫБРАТЬ" : "ЗАБАНИТЬ";
+      actionBtn.className = t && t[1] === "pick" ? "pick" : "ban";
+      actionBtn.disabled = !selected || finished || !t;
+      $("undoBtn").disabled = !history.length;
+      const picks = pool.filter(h => h.state === "pick");
+      const bans = pool.filter(h => h.state === "ban");
+      $("progress").textContent = `Пики: ${picks.length}/10 · Баны: ${bans.length}/${DRAFT_ORDER.filter(x => x[1] === "ban").length}`;
+      $("radScore").textContent = `${picks.filter(h => h.team === "Radiant").length} / 5 picks`;
+      $("direScore").textContent = `${picks.filter(h => h.team === "Dire").length} / 5 picks`;
+      // Teams are derived from the chronological draft history.
+      const teamPicks = { Radiant: [], Dire: [] }; history.forEach(x => { if (x.action === "pick") teamPicks[x.team].push(x.hero) });
+      ["Radiant", "Dire"].forEach(team => {
+        const target = $(team === "Radiant" ? "radSlots" : "direSlots"); target.innerHTML = "";
+        for (let i = 0; i < 5; i++) {
+          const h = teamPicks[team][i]; const el = document.createElement("div"); el.className = "slot" + (h ? "" : " empty");
+          if (h) el.innerHTML = `<img src="${heroImage(h)}" alt=""><span class="name">${h.localized_name}</span><span class="kind">${ATTR[h.attr]}</span>`;
+          else el.textContent = `Пик ${i + 1}`; target.appendChild(el);
+        }
+      });
+      const teamBans = { Radiant: [], Dire: [] }; history.forEach(x => { if (x.action === "ban") teamBans[x.team].push(x.hero) });
+      ["Radiant", "Dire"].forEach(team => {
+        const target = $(team === "Radiant" ? "radBans" : "direBans"); target.innerHTML = "";
+        teamBans[team].forEach(h => {
+          const el = document.createElement("div"); el.className = "ban-chip";
+          el.innerHTML = `<img src="${heroImage(h)}" alt=""><span>${h.localized_name}</span>`;
+          target.appendChild(el);
+        });
+      });
+      $("order").innerHTML = DRAFT_ORDER.map((x, i) => `<div class="order-item ${i === turn && !finished ? "active" : ""}"><b>${String(i + 1).padStart(2, "0")}</b><span>${x[0]}</span><span>· ${x[1] === "pick" ? "ПИК" : "БАН"}</span><span>${history[i] ? history[i].hero.localized_name : ""}</span></div>`).join("");
+      renderPool();
+    }
+    const BLOCK_ORDER = ["int", "str", "agi", "all"];
+    const BLOCK_TITLE = { int: "Интеллект", str: "Сила", agi: "Ловкость", all: "Универсалы" };
+    function renderPool() {
+      const root = $("heroes"); root.innerHTML = "";
+      BLOCK_ORDER.forEach(attr => {
+        const list = pool.filter(h => h.attr === attr && h.localized_name.toLowerCase().includes(search));
+        if (!list.length) return;
+        const total = pool.filter(h => h.attr === attr);
+        const free = total.filter(h => !h.state).length;
+        const block = document.createElement("section"); block.className = "attr-block " + attr;
+        block.innerHTML = `<h3 class="attr-title">${BLOCK_TITLE[attr]} <small>${free} / ${total.length} доступно</small></h3><div class="heroes-grid"></div>`;
+        const grid = block.querySelector(".heroes-grid");
+        list.forEach(h => {
+          const b = document.createElement("button"); b.className = "hero" + (h.state === "pick" ? " picked" : h.state === "ban" ? " banned" : "");
+          b.disabled = !!h.state || finished; b.innerHTML = `<img loading="lazy" src="${heroImage(h)}" alt=""><span class="attr">${ATTR_ICON[h.attr]}</span><span class="hero-name">${h.localized_name}</span>`;
+          if (selected?.id === h.id) b.style.outline = "2px solid var(--gold)";
+          b.addEventListener("click", () => { selected = h; render(); }); grid.appendChild(b);
+        });
+        root.appendChild(block);
+      });
+    }
+    $("actionBtn").onclick = act; $("undoBtn").onclick = undo;
+    $("resetBtn").onclick = () => { pool = pool.map(h => ({ ...h, state: undefined })); turn = 0; history = []; selected = null; finished = false; render(); };
+    $("randomBtn").onclick = () => { const available = pool.filter(h => !h.state); if (available.length) { selected = available[Math.floor(Math.random() * available.length)]; render(); } };
+    $("search").addEventListener("input", e => { search = e.target.value.toLowerCase(); renderPool(); });
+    async function init() {
+      try {
+        const res = await fetch("https://api.opendota.com/api/heroStats"); if (!res.ok) throw new Error("HTTP " + res.status);
+        const data = await res.json(); pool = makePool(data); $("apiStatus").textContent = "Герои загружены · 50 в пуле"; render();
+      } catch (e) { $("apiStatus").textContent = "Не удалось загрузить героев"; $("turnTitle").textContent = "Ошибка загрузки"; $("turnDesc").textContent = "Проверь подключение к интернету и обнови страницу. " + e.message; }
+    }
+    init();
+  </script>
+</body>
+
+</html>
